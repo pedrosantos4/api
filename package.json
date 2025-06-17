@@ -1,0 +1,28 @@
+{
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "mongodb": "^6.17.0"
+  },
+  "type": "module",
+  "main": "handler.js",
+  "scripts": {
+    "start": "node api/src/handler.js",
+    "dev": "nodemon api/src/handler.js"
+  },
+  "name": "apiconnector",
+  "version": "1.0.0",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pedrosantos4/api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pedrosantos4/api/issues"
+  },
+  "homepage": "https://github.com/pedrosantos4/api#readme",
+  "devDependencies": {}
+}
