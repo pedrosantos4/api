@@ -21,7 +21,6 @@ app.use(express.json());
 let isConnected = false;
 const requiredFields = ['db', 'collection', 'query'];
 
-
 app.post('/urlshortener', async (req, res) => {
 
   const missingFields = validateRequiredFields(req.body, requiredFields);
@@ -55,9 +54,6 @@ app.post('/urlshortener', async (req, res) => {
   const query = req.body.query;
   try {
     const result = await collection.findOne(query);
-
-    //console.log(db, collection, query)
-    console.log(result)
     if (result && result.urlShortened) {
       res.send({
         status: 'ok',
@@ -66,14 +62,20 @@ app.post('/urlshortener', async (req, res) => {
         }
       });
     } else {
-      res.status(404).send({
-        status: 'error',
-        message: 'Not Found'
+      let urlShortened = `${process.env.DOMAIN.toLowerCase()}${codeGenerator(8)}`;
+      const result = await collection.insertOne({
+        url: req.body.query.url,
+        urlShortened
+      });
+      res.status(201).send({
+        status: 'ok',
+        data: {
+          "urlShortened": urlShortened
+        }
       });
     }
 
   } catch (error) {
-    console.error(error);
     res.status(500).send({ status: 'error', message: error.message });
   }
 });
