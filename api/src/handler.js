@@ -11,7 +11,7 @@ const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
     strict: true,
-    deprecationErrors: true,
+    deprecationErrors: true,  
   }
 });
 
@@ -22,7 +22,7 @@ let isConnected = false;
 const requiredFields = ['db', 'collection', 'query'];
 
 app.post('/urlshortener', async (req, res) => {
-  console.log("request recebida")
+  //console.log("request recebida");
   const missingFields = validateRequiredFields(req.body, requiredFields);
   if (missingFields.missing) {
     return res.status(400).send({
@@ -38,16 +38,17 @@ app.post('/urlshortener', async (req, res) => {
       message: `Missing value in fields: '${missingFieldsValue.fields.join(', ')}'`
     });
   }
-
+  //console.log("Passou pelas validações");
   if (!isConnected) {
     try {
       await client.connect();
       isConnected = true;
-      console.log("MongoDB connected");
+      //console.log("MongoDB connected");
     } catch (error) {
       res.status(500).send({ status: 'error', message: error.message });
     }
   }
+  //console.log("Conectou no MongoDB");
 
   const db = client.db(req.body.db);
   const collection = db.collection(req.body.collection);
@@ -62,6 +63,7 @@ app.post('/urlshortener', async (req, res) => {
         }
       });
     } else {
+  //console.log("Tentando enviar response");
       let urlShortened = `${process.env.DOMAIN.toLowerCase()}${codeGenerator(8)}`;
       const result = await collection.insertOne({
         url: req.body.query.url,
