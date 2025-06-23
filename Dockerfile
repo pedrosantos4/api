@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM ubuntu:latest AS build
 WORKDIR /api
 COPY . .
 RUN rm -rf node_modules
@@ -7,5 +7,5 @@ RUN apt-get update && \
     curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
     apt-get install -y nodejs
 RUN npm i
-CMD ["npm", "start"]
 EXPOSE 3000
+CMD ["npm", "start"]

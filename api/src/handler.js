@@ -22,7 +22,7 @@ let isConnected = false;
 const requiredFields = ['db', 'collection', 'query'];
 
 app.post('/urlshortener', async (req, res) => {
-
+  console.log("request recebida")
   const missingFields = validateRequiredFields(req.body, requiredFields);
   if (missingFields.missing) {
     return res.status(400).send({
@@ -80,4 +80,4 @@ app.post('/urlshortener', async (req, res) => {
   }
 });
 
-app.listen(5002, () => console.log("running..."));
+app.listen(3000, () => console.log("running..."));
